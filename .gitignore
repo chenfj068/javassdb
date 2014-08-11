@@ -1,8 +1,5 @@
-*.o
-*.a
-*.class
-.DS_Store
-*.pyc
-*.swp
-*_cpy_*
+.settings
+target
+.classpath
+.project
 

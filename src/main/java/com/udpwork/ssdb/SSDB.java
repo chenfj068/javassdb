@@ -23,7 +23,7 @@ public class SSDB{
 	public SSDB(String host, int port, int timeout_ms) throws Exception{
 		link = new Link(host, port, timeout_ms);
 	}
-	
+
 	public void close(){
 		link.close();
 	}
@@ -35,7 +35,7 @@ public class SSDB{
 	public Response request(String cmd, String...params) throws Exception{
 		return link.request(cmd, params);
 	}
-	
+
 	public Response request(String cmd, List<byte[]> params) throws Exception{
 		return link.request(cmd, params);
 	}
@@ -49,11 +49,11 @@ public class SSDB{
 		}
 		resp.exception();
 	}
-	
+
 	public void set(String key, byte[] val) throws Exception{
 		set(key.getBytes(), val);
 	}
-	
+
 	public void set(String key, String val) throws Exception{
 		set(key, val.getBytes());
 	}
@@ -65,13 +65,13 @@ public class SSDB{
 		}
 		resp.exception();
 	}
-	
+
 	public void del(String key) throws Exception{
 		del(key.getBytes());
 	}
 
 	/***
-	 * 
+	 *
 	 * @param key
 	 * @return null if not found
 	 * @throws Exception
@@ -90,9 +90,9 @@ public class SSDB{
 		resp.exception();
 		return null;
 	}
-	
+
 	/***
-	 * 
+	 *
 	 * @param key
 	 * @return null if not found
 	 * @throws Exception
@@ -115,15 +115,15 @@ public class SSDB{
 		resp.buildMap();
 		return resp;
 	}
-	
+
 	public Response scan(String key_start, String key_end, int limit) throws Exception{
 		return _scan("scan", key_start, key_end, limit);
 	}
-	
+
 	public Response rscan(String key_start, String key_end, int limit) throws Exception{
 		return _scan("rscan", key_start, key_end, limit);
 	}
-	
+
 	public long incr(String key, long by) throws Exception{
 		Response resp = link.request("incr", key, (new Long(by)).toString());
 		if(!resp.ok()){
@@ -136,7 +136,7 @@ public class SSDB{
 		ret = Long.parseLong(new String(resp.raw.get(1)));
 		return ret;
 	}
-	
+
 	/* hashmap */
 
 	public void hset(String name, byte[] key, byte[] val) throws Exception{
@@ -146,15 +146,15 @@ public class SSDB{
 		}
 		resp.exception();
 	}
-	
+
 	public void hset(String name, String key, byte[] val) throws Exception{
 		this.hset(name, key.getBytes(), val);
 	}
-	
+
 	public void hset(String name, String key, String val) throws Exception{
 		this.hset(name, key, val.getBytes());
 	}
-	
+
 	public void hdel(String name, byte[] key) throws Exception{
 		Response resp = link.request("hdel", name.getBytes(), key);
 		if(resp.ok()){
@@ -162,13 +162,13 @@ public class SSDB{
 		}
 		resp.exception();
 	}
-	
+
 	public void hdel(String name, String key) throws Exception{
 		this.hdel(name, key.getBytes());
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 * @param key
 	 * @return null if not found
@@ -188,9 +188,9 @@ public class SSDB{
 		resp.exception();
 		return null;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param name
 	 * @param key
 	 * @return null if not found
@@ -219,15 +219,15 @@ public class SSDB{
 		}
 		return resp;
 	}
-	
+
 	public Response hscan(String name, String key_start, String key_end, int limit) throws Exception{
 		return this._hscan("hscan", name, key_start, key_end, limit);
 	}
-	
+
 	public Response hrscan(String name, String key_start, String key_end, int limit) throws Exception{
 		return this._hscan("hrscan", name, key_start, key_end, limit);
 	}
-	
+
 	public long hincr(String name, String key, long by) throws Exception{
 		Response resp = link.request("hincr", name, key, (new Long(by)).toString());
 		if(!resp.ok()){
@@ -240,7 +240,7 @@ public class SSDB{
 		ret = Long.parseLong(new String(resp.raw.get(1)));
 		return ret;
 	}
-	
+
 	/* zset */
 
 	public void zset(String name, byte[] key, double score) throws Exception{
@@ -250,11 +250,11 @@ public class SSDB{
 		}
 		resp.exception();
 	}
-	
+
 	public void zset(String name, String key, double score) throws Exception{
 		zset(name, key.getBytes(), score);
 	}
-	
+
 	public void zdel(String name, byte[] key) throws Exception{
 		Response resp = link.request("zdel", name.getBytes(), key);
 		if(resp.ok()){
@@ -262,13 +262,13 @@ public class SSDB{
 		}
 		resp.exception();
 	}
-	
+
 	public void zdel(String name, String key) throws Exception{
 		this.zdel(name, key.getBytes());
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param name
 	 * @param key
 	 * @return Double.NaN if not found.
@@ -290,7 +290,7 @@ public class SSDB{
 	}
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 * @param key
 	 * @return Double.NaN if not found.
@@ -324,15 +324,15 @@ public class SSDB{
 		}
 		return resp;
 	}
-	
+
 	public Response zscan(String name, String key, Double score_start, Double score_end, int limit) throws Exception{
 		return this._zscan("zscan", name, key, score_start, score_end, limit);
 	}
-	
+
 	public Response zrscan(String name, String key, Double score_start, Double score_end, int limit) throws Exception{
 		return this._zscan("zrscan", name, key, score_start, score_end, limit);
 	}
-	
+
 	public long zincr(String name, String key, long by) throws Exception{
 		Response resp = link.request("zincr", name, key, (new Long(by)).toString());
 		if(!resp.ok()){
@@ -347,7 +347,7 @@ public class SSDB{
 	}
 
 	/****************/
-	
+
 	public Response multi_get(String...keys) throws Exception{
 		Response resp = link.request("multi_get", keys);
 		if(!resp.ok()){
@@ -356,7 +356,7 @@ public class SSDB{
 		resp.buildMap();
 		return resp;
 	}
-	
+
 	public Response multi_get(byte[]...keys) throws Exception{
 		Response resp = link.request("multi_get", keys);
 		if(!resp.ok()){
@@ -365,7 +365,7 @@ public class SSDB{
 		resp.buildMap();
 		return resp;
 	}
-	
+
 	public void multi_set(String...kvs) throws Exception{
 		if(kvs.length % 2 != 0){
 			throw new Exception("Invalid arguments count");
@@ -375,7 +375,7 @@ public class SSDB{
 			resp.exception();
 		}
 	}
-	
+
 	public void multi_set(byte[]...kvs) throws Exception{
 		if(kvs.length % 2 != 0){
 			throw new Exception("Invalid arguments count");
@@ -385,7 +385,7 @@ public class SSDB{
 			resp.exception();
 		}
 	}
-	
+
 	public Response multi_del(String...keys) throws Exception{
 		Response resp = link.request("multi_del", keys);
 		if(!resp.ok()){
@@ -394,7 +394,7 @@ public class SSDB{
 		resp.buildMap();
 		return resp;
 	}
-	
+
 	public Response multi_del(byte[]...keys) throws Exception{
 		Response resp = link.request("multi_del", keys);
 		if(!resp.ok()){
@@ -402,5 +402,11 @@ public class SSDB{
 		}
 		resp.buildMap();
 		return resp;
+	}
+
+	public void ping()throws Exception{
+		Response response=link.request("ping", "");
+		if(!response.ok())
+			throw new Exception("ping exception:"+response.status);
 	}
 }
